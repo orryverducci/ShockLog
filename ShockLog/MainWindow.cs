@@ -45,6 +45,8 @@ namespace ShockLog
             IntPtr sysMenuHandle = GetSystemMenu(this.Handle, false);
             InsertMenu(sysMenuHandle, 5, MF_BYPOSITION | MF_SEPARATOR, 0, string.Empty);
             InsertMenu(sysMenuHandle, 6, MF_BYPOSITION, IDM_ABOUT, "About ShockLog...");
+            // Add event handlers
+            logger.PeakLevelMeterUpdate += new Logger.LevelEventHandler(LevelUpdate);
         }
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
@@ -95,5 +97,23 @@ namespace ShockLog
             }
         }
         #endregion
+
+        /// <summary>
+        /// Update levels on the volume meters
+        /// </summary>
+        /// <param name="sender">Sending object</param>
+        /// <param name="e">Event arguments</param>
+        private void LevelUpdate(object sender, Logger.LevelEventArgs e)
+        {
+            if (IsHandleCreated) // If the window has a handle
+            {
+                // Invoke on form thread
+                BeginInvoke((MethodInvoker)delegate
+                {
+                    leftVolumeMeter.Amplitude = (float)e.LeftLevel;
+                    rightVolumeMeter.Amplitude = (float)e.RightLevel;
+                });
+            }
+        }
     }
 }
