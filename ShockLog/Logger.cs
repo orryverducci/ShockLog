@@ -47,7 +47,7 @@ namespace ShockLog
         }
         public delegate void LevelEventHandler(object sender, LevelEventArgs e);
         public event LevelEventHandler PeakLevelMeterUpdate;
-        public static event EventHandler StatusChange;
+        public event EventHandler StatusChange;
         #endregion
 
         #region Enumerations

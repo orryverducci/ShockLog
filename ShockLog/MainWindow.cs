@@ -47,6 +47,7 @@ namespace ShockLog
             InsertMenu(sysMenuHandle, 6, MF_BYPOSITION, IDM_ABOUT, "About ShockLog...");
             // Add event handlers
             logger.PeakLevelMeterUpdate += new Logger.LevelEventHandler(LevelUpdate);
+            logger.StatusChange += new EventHandler(StatusUpdate);
         }
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
@@ -130,6 +131,25 @@ namespace ShockLog
                     leftVolumeMeter.Amplitude = (float)e.LeftLevel;
                     rightVolumeMeter.Amplitude = (float)e.RightLevel;
                 });
+            }
+        }
+
+        /// <summary>
+        /// Update the window to reflect encoder status
+        /// </summary>
+        /// <param name="sender">Sending object</param>
+        /// <param name="e">Event arguments</param>
+        private void StatusUpdate(object sender, EventArgs e)
+        {
+            if (logger.CurrentStatus == Logger.Status.LOGGING) // If logging
+            {
+                statusLabel.Text = "Logging";
+                stopStartButton.Text = "Stop Logging";
+            }
+            else if (logger.CurrentStatus == Logger.Status.NOTLOGGING) // If not logging
+            {
+                statusLabel.Text = "Not Logging";
+                stopStartButton.Text = "Start Logging";
             }
         }
     }
