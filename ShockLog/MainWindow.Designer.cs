@@ -72,6 +72,7 @@
             this.stopStartButton.TabIndex = 4;
             this.stopStartButton.Text = "Start Logging";
             this.stopStartButton.UseVisualStyleBackColor = true;
+            this.stopStartButton.Click += new System.EventHandler(this.stopStartButton_Click);
             // 
             // expanderLabel
             // 
@@ -142,11 +143,11 @@
             // 
             // folderLabel
             // 
-            this.folderLabel.AutoSize = true;
+            this.folderLabel.AutoEllipsis = true;
             this.folderLabel.CausesValidation = false;
             this.folderLabel.Location = new System.Drawing.Point(12, 193);
             this.folderLabel.Name = "folderLabel";
-            this.folderLabel.Size = new System.Drawing.Size(0, 13);
+            this.folderLabel.Size = new System.Drawing.Size(184, 21);
             this.folderLabel.TabIndex = 14;
             // 
             // organiseCheckBox

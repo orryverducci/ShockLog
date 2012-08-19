@@ -81,6 +81,23 @@ namespace ShockLog
 
         #region Buttons
         /// <summary>
+        /// Starts or stops the logger depending on the logger state
+        /// </summary>
+        /// <param name="sender">Sending object</param>
+        /// <param name="e">Event arguments</param>
+        private void stopStartButton_Click(object sender, EventArgs e)
+        {
+            if (logger.CurrentStatus == Logger.Status.NOTLOGGING) // If not logging
+            {
+                logger.Start(); // Start the logger
+            }
+            else if (logger.CurrentStatus == Logger.Status.LOGGING) // If currently logging
+            {
+                logger.Stop(); // Stop the logger
+            }
+        }
+
+        /// <summary>
         /// Changes window size based on whether check box is checked, revealing or hiding options
         /// </summary>
         /// <param name="sender">Sending object</param>

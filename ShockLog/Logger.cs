@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,9 +14,29 @@ namespace ShockLog
     {
         #region Private Fields
         private bool successfulInit; // Represents if BASS was successfully initialised
-        private static int recordingHandle; // Handle of the recording stream
-        private static RECORDPROC recordProc = new RECORDPROC(RecordHandler); // Recording Callback
-        private static DSP_PeakLevelMeter peakLevelMeter; // Peak Level Meter
+        private int recordingHandle; // Handle of the recording stream
+        private RECORDPROC recordProc = new RECORDPROC(RecordHandler); // Recording Callback
+        private DSP_PeakLevelMeter peakLevelMeter; // Peak Level Meter
+        private IBaseEncoder encoder = null;
+        private Status currentStatus = Status.NOTLOGGING; // Current streaming status
+        #endregion
+
+        #region Properties
+        public Status CurrentStatus
+        {
+            get
+            {
+                return currentStatus;
+            }
+            private set
+            {
+                currentStatus = value;
+                if (StatusChange != null)
+                {
+                    StatusChange(null, new EventArgs());
+                }
+            }
+        }
         #endregion
 
         #region Events
@@ -26,6 +47,15 @@ namespace ShockLog
         }
         public delegate void LevelEventHandler(object sender, LevelEventArgs e);
         public event LevelEventHandler PeakLevelMeterUpdate;
+        public static event EventHandler StatusChange;
+        #endregion
+
+        #region Enumerations
+        public enum Status
+        {
+            NOTLOGGING,
+            LOGGING
+        }
         #endregion
 
         #region Methods
@@ -113,6 +143,50 @@ namespace ShockLog
                 // Trigger event
                 PeakLevelMeterUpdate(null, levelEvent);
             }
+        }
+        #endregion
+
+        #region Logging
+        /// <summary>
+        /// Start logging
+        /// </summary>
+        public void Start()
+        {
+            EncoderLAME lameEncoder = new EncoderLAME(recordingHandle);
+            // Set encoder settings
+            lameEncoder.InputFile = null; // Set input to Stdout
+            lameEncoder.OutputFile = "C:\\log.mp3"; // Set output file
+            lameEncoder.LAME_Bitrate = 128; // Set bitrate
+            lameEncoder.LAME_Mode = EncoderLAME.LAMEMode.Default; // Number of channels
+            lameEncoder.LAME_TargetSampleRate = (int)EncoderLAME.SAMPLERATE.Hz_44100; // Sample rate
+            lameEncoder.LAME_Quality = EncoderLAME.LAMEQuality.Quality; // Encoding quality
+            // Set encoder location
+            if (IntPtr.Size == 8) // If running in 64 bit
+            {
+                lameEncoder.EncoderDirectory = "x64";
+            }
+            else // Else if running in 32 bit
+            {
+                lameEncoder.EncoderDirectory = "x86";
+            }
+            if (!lameEncoder.EncoderExists) // If encoder has not been found, throw an exception
+            {
+                throw new FileNotFoundException("Unable to find encoder");
+            }
+            // Start encoder
+            encoder = lameEncoder;
+            encoder.Start(null, IntPtr.Zero, false);
+            CurrentStatus = Status.LOGGING;
+        }
+
+        /// <summary>
+        /// Stop logging
+        /// </summary>
+        public void Stop()
+        {
+            encoder.Stop();
+            encoder = null;
+            CurrentStatus = Status.NOTLOGGING;
         }
         #endregion
         #endregion
