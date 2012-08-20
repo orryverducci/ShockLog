@@ -143,13 +143,41 @@ namespace ShockLog
         {
             if (logger.CurrentStatus == Logger.Status.LOGGING) // If logging
             {
+                // Change text to logging
                 statusLabel.Text = "Logging";
                 stopStartButton.Text = "Stop Logging";
+                // Disable options
+                fileSeperator.Enabled = false;
+                bitrateLabel.Enabled = false;
+                bitrateUpDown.Enabled = false;
+                lengthLabel.Enabled = false;
+                lengthUpDown.Enabled = false;
+                folderSeperator.Enabled = false;
+                folderLabel.Enabled = false;
+                browseButton.Enabled = false;
+                organiseCheckBox.Enabled = false;
+                clearCheckBox.Enabled = false;
+                clearUpDown.Enabled = false;
+                clearLabel.Enabled = false;
             }
             else if (logger.CurrentStatus == Logger.Status.NOTLOGGING) // If not logging
             {
+                // Change text to not logging
                 statusLabel.Text = "Not Logging";
                 stopStartButton.Text = "Start Logging";
+                // Enable options
+                fileSeperator.Enabled = true;
+                bitrateLabel.Enabled = true;
+                bitrateUpDown.Enabled = true;
+                lengthLabel.Enabled = true;
+                lengthUpDown.Enabled = true;
+                folderSeperator.Enabled = true;
+                folderLabel.Enabled = true;
+                browseButton.Enabled = true;
+                organiseCheckBox.Enabled = true;
+                clearCheckBox.Enabled = true;
+                clearUpDown.Enabled = true;
+                clearLabel.Enabled = true;
             }
         }
     }

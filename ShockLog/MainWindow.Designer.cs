@@ -34,12 +34,12 @@
             this.bitrateUpDown = new System.Windows.Forms.NumericUpDown();
             this.bitrateLabel = new System.Windows.Forms.Label();
             this.lengthLabel = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.button1 = new System.Windows.Forms.Button();
+            this.lengthUpDown = new System.Windows.Forms.NumericUpDown();
+            this.browseButton = new System.Windows.Forms.Button();
             this.folderLabel = new System.Windows.Forms.Label();
             this.organiseCheckBox = new System.Windows.Forms.CheckBox();
             this.clearCheckBox = new System.Windows.Forms.CheckBox();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.clearUpDown = new System.Windows.Forms.NumericUpDown();
             this.clearLabel = new System.Windows.Forms.Label();
             this.expanderCheckBox = new System.Windows.Forms.CheckBox();
             this.folderSeperator = new ShockCast.Seperator();
@@ -48,8 +48,8 @@
             this.leftVolumeMeter = new ShockCast.VolumeMeter();
             this.rightVolumeMeter = new ShockCast.VolumeMeter();
             ((System.ComponentModel.ISupportInitialize)(this.bitrateUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lengthUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.clearUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // statusLabel
@@ -59,7 +59,7 @@
             this.statusLabel.Location = new System.Drawing.Point(12, 33);
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.Size = new System.Drawing.Size(208, 21);
-            this.statusLabel.TabIndex = 3;
+            this.statusLabel.TabIndex = 1;
             this.statusLabel.Text = "Not Logging";
             // 
             // stopStartButton
@@ -69,7 +69,7 @@
             this.stopStartButton.Location = new System.Drawing.Point(15, 57);
             this.stopStartButton.Name = "stopStartButton";
             this.stopStartButton.Size = new System.Drawing.Size(100, 25);
-            this.stopStartButton.TabIndex = 4;
+            this.stopStartButton.TabIndex = 2;
             this.stopStartButton.Text = "Start Logging";
             this.stopStartButton.UseVisualStyleBackColor = true;
             this.stopStartButton.Click += new System.EventHandler(this.stopStartButton_Click);
@@ -81,7 +81,7 @@
             this.expanderLabel.Location = new System.Drawing.Point(46, 94);
             this.expanderLabel.Name = "expanderLabel";
             this.expanderLabel.Size = new System.Drawing.Size(73, 13);
-            this.expanderLabel.TabIndex = 6;
+            this.expanderLabel.TabIndex = 4;
             this.expanderLabel.Text = "Show Options";
             // 
             // bitrateUpDown
@@ -95,7 +95,7 @@
             0});
             this.bitrateUpDown.Name = "bitrateUpDown";
             this.bitrateUpDown.Size = new System.Drawing.Size(60, 20);
-            this.bitrateUpDown.TabIndex = 8;
+            this.bitrateUpDown.TabIndex = 9;
             // 
             // bitrateLabel
             // 
@@ -104,7 +104,7 @@
             this.bitrateLabel.Location = new System.Drawing.Point(12, 142);
             this.bitrateLabel.Name = "bitrateLabel";
             this.bitrateLabel.Size = new System.Drawing.Size(37, 13);
-            this.bitrateLabel.TabIndex = 9;
+            this.bitrateLabel.TabIndex = 8;
             this.bitrateLabel.Text = "Bitrate";
             // 
             // lengthLabel
@@ -114,32 +114,32 @@
             this.lengthLabel.Location = new System.Drawing.Point(127, 142);
             this.lengthLabel.Name = "lengthLabel";
             this.lengthLabel.Size = new System.Drawing.Size(75, 13);
-            this.lengthLabel.TabIndex = 11;
+            this.lengthLabel.TabIndex = 10;
             this.lengthLabel.Text = "Length (hours)";
             // 
-            // numericUpDown1
+            // lengthUpDown
             // 
-            this.numericUpDown1.CausesValidation = false;
-            this.numericUpDown1.Location = new System.Drawing.Point(212, 140);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.lengthUpDown.CausesValidation = false;
+            this.lengthUpDown.Location = new System.Drawing.Point(212, 140);
+            this.lengthUpDown.Maximum = new decimal(new int[] {
             1000,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(60, 20);
-            this.numericUpDown1.TabIndex = 10;
+            this.lengthUpDown.Name = "lengthUpDown";
+            this.lengthUpDown.Size = new System.Drawing.Size(60, 20);
+            this.lengthUpDown.TabIndex = 11;
             // 
-            // button1
+            // browseButton
             // 
-            this.button1.CausesValidation = false;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button1.Location = new System.Drawing.Point(202, 187);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(70, 25);
-            this.button1.TabIndex = 13;
-            this.button1.Text = "Browse";
-            this.button1.UseVisualStyleBackColor = true;
+            this.browseButton.CausesValidation = false;
+            this.browseButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.browseButton.Location = new System.Drawing.Point(202, 187);
+            this.browseButton.Name = "browseButton";
+            this.browseButton.Size = new System.Drawing.Size(70, 25);
+            this.browseButton.TabIndex = 14;
+            this.browseButton.Text = "Browse";
+            this.browseButton.UseVisualStyleBackColor = true;
             // 
             // folderLabel
             // 
@@ -148,7 +148,7 @@
             this.folderLabel.Location = new System.Drawing.Point(12, 193);
             this.folderLabel.Name = "folderLabel";
             this.folderLabel.Size = new System.Drawing.Size(184, 21);
-            this.folderLabel.TabIndex = 14;
+            this.folderLabel.TabIndex = 13;
             // 
             // organiseCheckBox
             // 
@@ -174,18 +174,18 @@
             this.clearCheckBox.Text = "Delete recordings older than:";
             this.clearCheckBox.UseVisualStyleBackColor = true;
             // 
-            // numericUpDown2
+            // clearUpDown
             // 
-            this.numericUpDown2.CausesValidation = false;
-            this.numericUpDown2.Location = new System.Drawing.Point(32, 266);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
+            this.clearUpDown.CausesValidation = false;
+            this.clearUpDown.Location = new System.Drawing.Point(32, 266);
+            this.clearUpDown.Maximum = new decimal(new int[] {
             730,
             0,
             0,
             0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(60, 20);
-            this.numericUpDown2.TabIndex = 17;
+            this.clearUpDown.Name = "clearUpDown";
+            this.clearUpDown.Size = new System.Drawing.Size(60, 20);
+            this.clearUpDown.TabIndex = 17;
             // 
             // clearLabel
             // 
@@ -205,7 +205,7 @@
             this.expanderCheckBox.Location = new System.Drawing.Point(15, 88);
             this.expanderCheckBox.Name = "expanderCheckBox";
             this.expanderCheckBox.Size = new System.Drawing.Size(25, 25);
-            this.expanderCheckBox.TabIndex = 19;
+            this.expanderCheckBox.TabIndex = 3;
             this.expanderCheckBox.Text = "⏬";
             this.expanderCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.expanderCheckBox.UseVisualStyleBackColor = true;
@@ -233,7 +233,7 @@
             this.statusSeperator.Location = new System.Drawing.Point(12, 12);
             this.statusSeperator.Name = "statusSeperator";
             this.statusSeperator.Size = new System.Drawing.Size(208, 15);
-            this.statusSeperator.TabIndex = 2;
+            this.statusSeperator.TabIndex = 0;
             // 
             // leftVolumeMeter
             // 
@@ -245,7 +245,7 @@
             this.leftVolumeMeter.MinDb = -60F;
             this.leftVolumeMeter.Name = "leftVolumeMeter";
             this.leftVolumeMeter.Size = new System.Drawing.Size(16, 101);
-            this.leftVolumeMeter.TabIndex = 1;
+            this.leftVolumeMeter.TabIndex = 5;
             // 
             // rightVolumeMeter
             // 
@@ -257,7 +257,7 @@
             this.rightVolumeMeter.MinDb = -60F;
             this.rightVolumeMeter.Name = "rightVolumeMeter";
             this.rightVolumeMeter.Size = new System.Drawing.Size(16, 101);
-            this.rightVolumeMeter.TabIndex = 0;
+            this.rightVolumeMeter.TabIndex = 6;
             // 
             // MainWindow
             // 
@@ -267,14 +267,14 @@
             this.ClientSize = new System.Drawing.Size(284, 300);
             this.Controls.Add(this.expanderCheckBox);
             this.Controls.Add(this.clearLabel);
-            this.Controls.Add(this.numericUpDown2);
+            this.Controls.Add(this.clearUpDown);
             this.Controls.Add(this.clearCheckBox);
             this.Controls.Add(this.organiseCheckBox);
             this.Controls.Add(this.folderLabel);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.browseButton);
             this.Controls.Add(this.folderSeperator);
             this.Controls.Add(this.lengthLabel);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.lengthUpDown);
             this.Controls.Add(this.bitrateLabel);
             this.Controls.Add(this.bitrateUpDown);
             this.Controls.Add(this.fileSeperator);
@@ -292,8 +292,8 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.Load += new System.EventHandler(this.MainWindow_Load);
             ((System.ComponentModel.ISupportInitialize)(this.bitrateUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lengthUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.clearUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -311,13 +311,13 @@
         private System.Windows.Forms.NumericUpDown bitrateUpDown;
         private System.Windows.Forms.Label bitrateLabel;
         private System.Windows.Forms.Label lengthLabel;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown lengthUpDown;
         private ShockCast.Seperator folderSeperator;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button browseButton;
         private System.Windows.Forms.Label folderLabel;
         private System.Windows.Forms.CheckBox organiseCheckBox;
         private System.Windows.Forms.CheckBox clearCheckBox;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.NumericUpDown clearUpDown;
         private System.Windows.Forms.Label clearLabel;
         private System.Windows.Forms.CheckBox expanderCheckBox;
     }
