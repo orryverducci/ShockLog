@@ -48,11 +48,31 @@ namespace ShockLog
             // Add event handlers
             logger.PeakLevelMeterUpdate += new Logger.LevelEventHandler(LevelUpdate);
             logger.StatusChange += new EventHandler(StatusUpdate);
+            // Load settings
+            bitrateUpDown.Value = Properties.Settings.Default.Bitrate;
+            lengthUpDown.Value = Properties.Settings.Default.Length;
+            if (Properties.Settings.Default.Folder == String.Empty) // If a folder has not been set, set to My Music
+            {
+                folderLabel.Text = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyMusic);
+            }
+            else // Else if folder has been set, use it
+            {
+                folderLabel.Text = Properties.Settings.Default.Folder;
+            }
+            organiseCheckBox.Checked = Properties.Settings.Default.OrganiseFolder;
+            clearCheckBox.Checked = Properties.Settings.Default.DeleteOld;
+            clearUpDown.Value = Properties.Settings.Default.DeleteTime;
         }
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Save settings
+            Properties.Settings.Default.Bitrate = (int)bitrateUpDown.Value;
+            Properties.Settings.Default.Length = (int)lengthUpDown.Value;
+            Properties.Settings.Default.Folder = folderLabel.Text;
+            Properties.Settings.Default.OrganiseFolder = organiseCheckBox.Checked;
+            Properties.Settings.Default.DeleteOld = clearCheckBox.Checked;
+            Properties.Settings.Default.DeleteTime = (int)clearUpDown.Value;
             Properties.Settings.Default.Save();
         }
         #endregion

@@ -87,15 +87,30 @@
             // bitrateUpDown
             // 
             this.bitrateUpDown.CausesValidation = false;
+            this.bitrateUpDown.Increment = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
             this.bitrateUpDown.Location = new System.Drawing.Point(55, 140);
             this.bitrateUpDown.Maximum = new decimal(new int[] {
-            1000,
+            320,
+            0,
+            0,
+            0});
+            this.bitrateUpDown.Minimum = new decimal(new int[] {
+            32,
             0,
             0,
             0});
             this.bitrateUpDown.Name = "bitrateUpDown";
             this.bitrateUpDown.Size = new System.Drawing.Size(60, 20);
             this.bitrateUpDown.TabIndex = 9;
+            this.bitrateUpDown.Value = new decimal(new int[] {
+            32,
+            0,
+            0,
+            0});
             // 
             // bitrateLabel
             // 
@@ -122,7 +137,7 @@
             this.lengthUpDown.CausesValidation = false;
             this.lengthUpDown.Location = new System.Drawing.Point(212, 140);
             this.lengthUpDown.Maximum = new decimal(new int[] {
-            1000,
+            24,
             0,
             0,
             0});
@@ -145,7 +160,7 @@
             // 
             this.folderLabel.AutoEllipsis = true;
             this.folderLabel.CausesValidation = false;
-            this.folderLabel.Location = new System.Drawing.Point(12, 193);
+            this.folderLabel.Location = new System.Drawing.Point(12, 192);
             this.folderLabel.Name = "folderLabel";
             this.folderLabel.Size = new System.Drawing.Size(184, 21);
             this.folderLabel.TabIndex = 13;
@@ -183,9 +198,19 @@
             0,
             0,
             0});
+            this.clearUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.clearUpDown.Name = "clearUpDown";
             this.clearUpDown.Size = new System.Drawing.Size(60, 20);
             this.clearUpDown.TabIndex = 17;
+            this.clearUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // clearLabel
             // 
