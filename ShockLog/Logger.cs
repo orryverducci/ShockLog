@@ -156,7 +156,7 @@ namespace ShockLog
             EncoderLAME lameEncoder = new EncoderLAME(recordingHandle);
             // Set encoder settings
             lameEncoder.InputFile = null; // Set input to Stdout
-            lameEncoder.OutputFile = "C:\\log.mp3"; // Set output file
+            lameEncoder.OutputFile = "C:\\Log " + DateTime.Now.ToString("dd-MM-yy t") + ".mp3"; // Set output file
             lameEncoder.LAME_Bitrate = Bitrate; // Set bitrate
             lameEncoder.LAME_Mode = EncoderLAME.LAMEMode.Default; // Number of channels
             lameEncoder.LAME_TargetSampleRate = (int)EncoderLAME.SAMPLERATE.Hz_44100; // Sample rate
