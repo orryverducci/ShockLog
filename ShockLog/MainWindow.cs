@@ -136,6 +136,13 @@ namespace ShockLog
         }
         #endregion
 
+        #region Settings Changes
+        private void bitrateUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            logger.Bitrate = (int)((NumericUpDown)sender).Value;
+        }
+        #endregion
+
         /// <summary>
         /// Update levels on the volume meters
         /// </summary>

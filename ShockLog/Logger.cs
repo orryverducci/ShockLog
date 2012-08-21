@@ -22,6 +22,7 @@ namespace ShockLog
         #endregion
 
         #region Properties
+        public int Bitrate;
         public Status CurrentStatus
         {
             get
@@ -156,7 +157,7 @@ namespace ShockLog
             // Set encoder settings
             lameEncoder.InputFile = null; // Set input to Stdout
             lameEncoder.OutputFile = "C:\\log.mp3"; // Set output file
-            lameEncoder.LAME_Bitrate = 128; // Set bitrate
+            lameEncoder.LAME_Bitrate = Bitrate; // Set bitrate
             lameEncoder.LAME_Mode = EncoderLAME.LAMEMode.Default; // Number of channels
             lameEncoder.LAME_TargetSampleRate = (int)EncoderLAME.SAMPLERATE.Hz_44100; // Sample rate
             lameEncoder.LAME_Quality = EncoderLAME.LAMEQuality.Quality; // Encoding quality

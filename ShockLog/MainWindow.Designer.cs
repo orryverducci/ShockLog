@@ -111,6 +111,7 @@
             0,
             0,
             0});
+            this.bitrateUpDown.ValueChanged += new System.EventHandler(this.bitrateUpDown_ValueChanged);
             // 
             // bitrateLabel
             // 
