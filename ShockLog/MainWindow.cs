@@ -134,6 +134,20 @@ namespace ShockLog
                 this.Height = 150;
             }
         }
+
+        /// <summary>
+        /// Opens browse dialog and uses result to set logging location
+        /// </summary>
+        /// <param name="sender">Sending object</param>
+        /// <param name="e">Event argument</param>
+        private void browseButton_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog folderDialog = new FolderBrowserDialog();
+            if (folderDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) // If OK is chosen on folder browse dialog
+            {
+                folderLabel.Text = folderDialog.SelectedPath; // Set location to selected path
+            }
+        }
         #endregion
 
         #region Settings Changes
