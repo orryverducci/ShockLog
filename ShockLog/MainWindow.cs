@@ -137,9 +137,24 @@ namespace ShockLog
         #endregion
 
         #region Settings Changes
+        /// <summary>
+        /// Updates logger bitrate with sender value
+        /// </summary>
+        /// <param name="sender">Sending object</param>
+        /// <param name="e">Event arguments</param>
         private void bitrateUpDown_ValueChanged(object sender, EventArgs e)
         {
             logger.Bitrate = (int)((NumericUpDown)sender).Value;
+        }
+
+        /// <summary>
+        /// Updates logging location with sender text
+        /// </summary>
+        /// <param name="sender">Sending object</param>
+        /// <param name="e">Event arguments</param>
+        private void folderLabel_TextChanged(object sender, EventArgs e)
+        {
+            logger.Folder = ((Label)sender).Text;
         }
         #endregion
 

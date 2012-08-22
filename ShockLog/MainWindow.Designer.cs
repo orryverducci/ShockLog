@@ -165,6 +165,7 @@
             this.folderLabel.Name = "folderLabel";
             this.folderLabel.Size = new System.Drawing.Size(184, 21);
             this.folderLabel.TabIndex = 13;
+            this.folderLabel.TextChanged += new System.EventHandler(this.folderLabel_TextChanged);
             // 
             // organiseCheckBox
             // 
