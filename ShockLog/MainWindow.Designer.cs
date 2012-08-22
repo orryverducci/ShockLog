@@ -179,6 +179,7 @@
             this.organiseCheckBox.TabIndex = 15;
             this.organiseCheckBox.Text = "Organise folder into weekly folders";
             this.organiseCheckBox.UseVisualStyleBackColor = true;
+            this.organiseCheckBox.CheckedChanged += new System.EventHandler(this.organiseCheckBox_CheckedChanged);
             // 
             // clearCheckBox
             // 

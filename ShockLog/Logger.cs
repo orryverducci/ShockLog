@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,7 @@ namespace ShockLog
         #region Properties
         public int Bitrate;
         public string Folder;
+        public bool WeeklyFolders;
         public Status CurrentStatus
         {
             get
@@ -155,9 +157,40 @@ namespace ShockLog
         public void Start()
         {
             EncoderLAME lameEncoder = new EncoderLAME(recordingHandle);
+            string location;
+            // Determine location to save recording to
+            if (WeeklyFolders == true) // If option to save into weekly folders is enabled
+            {
+                CultureInfo cultureInfo = CultureInfo.CurrentCulture; // Get system localisation information
+                DayOfWeek firstDay = cultureInfo.DateTimeFormat.FirstDayOfWeek; // Determine first day of the week
+                DateTime firstDayInWeek = DateTime.Now.Date; // Set to current date
+                // Keep reducing date until the day is the same as the first day of the week
+                while (firstDayInWeek.DayOfWeek != firstDay)
+                {
+                    firstDayInWeek = firstDayInWeek.AddDays(-1);
+                }
+                DayOfWeek lastDay = firstDayInWeek.AddDays(-1).DayOfWeek; // Determine last day of the week
+                DateTime lastDayInWeek = DateTime.Now.Date; // Set to current date
+                // Keep reducing date until the day is the same as the first day of the week
+                while (lastDayInWeek.DayOfWeek != lastDay)
+                {
+                    lastDayInWeek = lastDayInWeek.AddDays(1);
+                }
+                // Set location
+                location = Folder + "\\" + firstDayInWeek.ToString("dd-MM-yy") + " to " + lastDayInWeek.ToString("dd-MM-yy");
+            }
+            else // If option to save into weekly folders is disabled
+            {
+                location = Folder;
+            }
+            // Create location if it does not exist
+            if (!Directory.Exists(location))
+            {
+                Directory.CreateDirectory(location);
+            }
             // Set encoder settings
             lameEncoder.InputFile = null; // Set input to Stdout
-            lameEncoder.OutputFile = Folder + "\\Log " + DateTime.Now.ToString("dd-MM-yy HH.mm") + ".mp3"; // Set output file
+            lameEncoder.OutputFile = location + "\\Log " + DateTime.Now.ToString("dd-MM-yy HH.mm") + ".mp3"; // Set output file
             lameEncoder.LAME_Bitrate = Bitrate; // Set bitrate
             lameEncoder.LAME_Mode = EncoderLAME.LAMEMode.Default; // Number of channels
             lameEncoder.LAME_TargetSampleRate = (int)EncoderLAME.SAMPLERATE.Hz_44100; // Sample rate

@@ -170,6 +170,16 @@ namespace ShockLog
         {
             logger.Folder = ((Label)sender).Text;
         }
+
+        /// <summary>
+        /// Updates weekly folders setting depending on if selected checkbox is checked
+        /// </summary>
+        /// <param name="sender">Sending object</param>
+        /// <param name="e">Event arguments</param>
+        private void organiseCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            logger.WeeklyFolders = ((CheckBox)sender).Checked;
+        }
         #endregion
 
         /// <summary>
