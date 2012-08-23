@@ -162,6 +162,16 @@ namespace ShockLog
         }
 
         /// <summary>
+        /// Updates length to be used by logger with sender value
+        /// </summary>
+        /// <param name="sender">Sending object</param>
+        /// <param name="e">Event arguments</param>
+        private void lengthUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            logger.Length = (int)((NumericUpDown)sender).Value;
+        }
+
+        /// <summary>
         /// Updates logging location with sender text
         /// </summary>
         /// <param name="sender">Sending object</param>

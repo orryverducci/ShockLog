@@ -142,9 +142,20 @@
             0,
             0,
             0});
+            this.lengthUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.lengthUpDown.Name = "lengthUpDown";
             this.lengthUpDown.Size = new System.Drawing.Size(60, 20);
             this.lengthUpDown.TabIndex = 11;
+            this.lengthUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.lengthUpDown.ValueChanged += new System.EventHandler(this.lengthUpDown_ValueChanged);
             // 
             // browseButton
             // 

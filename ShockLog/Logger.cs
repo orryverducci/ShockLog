@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using Un4seen.Bass;
 using Un4seen.Bass.AddOn.Enc;
 using Un4seen.Bass.Misc;
@@ -18,15 +19,19 @@ namespace ShockLog
         private int recordingHandle; // Handle of the recording stream
         private RECORDPROC recordProc = new RECORDPROC(RecordHandler); // Recording Callback
         private DSP_PeakLevelMeter peakLevelMeter; // Peak Level Meter
-        private IBaseEncoder encoder = null;
+        private IBaseEncoder encoder = null; // Audio encoder
         private Status currentStatus = Status.NOTLOGGING; // Current streaming status
+        private Timer timer = new Timer(1000); // 1 second timer for file management
+        private int currentHour; // Time of hour as last noted by time based functionality in 24 hour format
+        private int hourRecordingStarted; // The hour the recording was started in 24 hour format
         #endregion
 
         #region Properties
-        public int Bitrate;
-        public string Folder;
-        public bool WeeklyFolders;
-        public Status CurrentStatus
+        public int Bitrate; // Bitrate of the recordings
+        public int Length; // Length of the recordings in hours
+        public string Folder; // Location of folder to save recordings in
+        public bool WeeklyFolders; // Save recordings in folders specific to each week
+        public Status CurrentStatus // The current status of the logger
         {
             get
             {
@@ -102,6 +107,8 @@ namespace ShockLog
             // Add Peak Level Meter DSP and Event Handler
             peakLevelMeter = new DSP_PeakLevelMeter(recordingHandle, 1);
             peakLevelMeter.Notification += new EventHandler(PeakLevelMeterNotification);
+            // Add timer event handler
+            timer.Elapsed += new ElapsedEventHandler(TimerElapsed);
         }
 
         /// <summary>
@@ -212,6 +219,10 @@ namespace ShockLog
             encoder = lameEncoder;
             encoder.Start(null, IntPtr.Zero, false);
             CurrentStatus = Status.LOGGING;
+            // Start timer
+            currentHour = DateTime.Now.Hour;
+            hourRecordingStarted = currentHour;
+            timer.Start();
         }
 
         /// <summary>
@@ -219,9 +230,49 @@ namespace ShockLog
         /// </summary>
         public void Stop()
         {
+            // Stop timer
+            timer.Stop();
+            // Stop encoder
             encoder.Stop();
             encoder = null;
             CurrentStatus = Status.NOTLOGGING;
+        }
+        #endregion
+
+        #region Time based functionality
+        /// <summary>
+        /// Determines if it is the top of a new hour to run file management functionality
+        /// </summary>
+        /// <param name="sender">Sending object</param>
+        /// <param name="e">Event arguments</param>
+        private void TimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            if (currentHour != DateTime.Now.Hour) // If hour has changed since last second
+            {
+                int newFileTime;
+                // Update current hour
+                currentHour = DateTime.Now.Hour;
+                // Determine time new file should be started
+                newFileTime = hourRecordingStarted + Length;
+                if (newFileTime > 23) // If calculated value flows past the 24 hour clock
+                {
+                    newFileTime = newFileTime - 24; // Correct overflow past 24 hours
+                }
+                // Start new file if neccessary
+                if (currentHour == newFileTime) // If hour matches the time to start a new file
+                {
+                    NewFile();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Start recording to a new file
+        /// </summary>
+        private void NewFile()
+        {
+            Stop();
+            Start();
         }
         #endregion
         #endregion
