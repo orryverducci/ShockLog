@@ -31,6 +31,8 @@ namespace ShockLog
         public int Length; // Length of the recordings in hours
         public string Folder; // Location of folder to save recordings in
         public bool WeeklyFolders; // Save recordings in folders specific to each week
+        public bool ClearOldLogs; // Clear logs older than a specified age
+        public int ClearAge; // Number of days before logs should be cleared, if enabled
         public Status CurrentStatus // The current status of the logger
         {
             get
@@ -116,6 +118,12 @@ namespace ShockLog
         /// </summary>
         ~Logger()
         {
+            if (currentStatus == Status.LOGGING) // If currently logging
+            {
+                // Stop logging
+                timer.Stop();
+                encoder.Stop();
+            }
             if (successfulInit) // If BASS has been initialised
             {
                 BassEnc.FreeMe(); // Free BASSenc
@@ -263,6 +271,11 @@ namespace ShockLog
                 {
                     NewFile();
                 }
+                // Clear old recordings if enabled
+                if (ClearOldLogs)
+                {
+                    ClearLogs(ClearAge);
+                }
             }
         }
 
@@ -273,6 +286,15 @@ namespace ShockLog
         {
             Stop();
             Start();
+        }
+
+        /// <summary>
+        /// Clears all recordings older than a certain age
+        /// </summary>
+        /// <param name="age">Age in days that files should be deleted if older than value</param>
+        private void ClearLogs(int age)
+        {
+
         }
         #endregion
         #endregion

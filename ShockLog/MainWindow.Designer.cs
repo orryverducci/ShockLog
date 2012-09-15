@@ -203,6 +203,7 @@
             this.clearCheckBox.TabIndex = 16;
             this.clearCheckBox.Text = "Delete recordings older than:";
             this.clearCheckBox.UseVisualStyleBackColor = true;
+            this.clearCheckBox.CheckedChanged += new System.EventHandler(this.clearCheckBox_CheckedChanged);
             // 
             // clearUpDown
             // 
@@ -226,6 +227,7 @@
             0,
             0,
             0});
+            this.clearUpDown.ValueChanged += new System.EventHandler(this.clearUpDown_ValueChanged);
             // 
             // clearLabel
             // 

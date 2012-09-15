@@ -48,6 +48,10 @@ namespace ShockLog
             // Add event handlers
             logger.PeakLevelMeterUpdate += new Logger.LevelEventHandler(LevelUpdate);
             logger.StatusChange += new EventHandler(StatusUpdate);
+            // Set initial NumericUpDown values in logger
+            logger.Bitrate = 32;
+            logger.Length = 1;
+            logger.ClearAge = 1;
             // Load settings
             bitrateUpDown.Value = Properties.Settings.Default.Bitrate;
             lengthUpDown.Value = Properties.Settings.Default.Length;
@@ -190,6 +194,26 @@ namespace ShockLog
         {
             logger.WeeklyFolders = ((CheckBox)sender).Checked;
         }
+
+        /// <summary>
+        /// Updates if old files should be deleted depending on if selected checkbox is checked
+        /// </summary>
+        /// <param name="sender">Sending object</param>
+        /// <param name="e">Event arguments</param>
+        private void clearCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            logger.ClearOldLogs = ((CheckBox)sender).Checked;
+        }
+
+        /// <summary>
+        /// Updates number of days until files are deleted according to sender value
+        /// </summary>
+        /// <param name="sender">Sending object</param>
+        /// <param name="e">Event arguments</param>
+        private void clearUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            logger.ClearAge = (int)((NumericUpDown)sender).Value;
+        }
         #endregion
 
         /// <summary>
@@ -217,43 +241,44 @@ namespace ShockLog
         /// <param name="e">Event arguments</param>
         private void StatusUpdate(object sender, EventArgs e)
         {
+            // Invokes required as timer events run on seperate threads
             if (logger.CurrentStatus == Logger.Status.LOGGING) // If logging
             {
                 // Change text to logging
-                statusLabel.Text = "Logging";
-                stopStartButton.Text = "Stop Logging";
+                statusLabel.Invoke(new MethodInvoker(delegate { statusLabel.Text = "Logging"; }));
+                stopStartButton.Invoke(new MethodInvoker(delegate { stopStartButton.Text = "Stop Logging"; }));
                 // Disable options
-                fileSeperator.Enabled = false;
-                bitrateLabel.Enabled = false;
-                bitrateUpDown.Enabled = false;
-                lengthLabel.Enabled = false;
-                lengthUpDown.Enabled = false;
-                folderSeperator.Enabled = false;
-                folderLabel.Enabled = false;
-                browseButton.Enabled = false;
-                organiseCheckBox.Enabled = false;
-                clearCheckBox.Enabled = false;
-                clearUpDown.Enabled = false;
-                clearLabel.Enabled = false;
+                fileSeperator.Invoke(new MethodInvoker(delegate { fileSeperator.Enabled = false; }));
+                bitrateLabel.Invoke(new MethodInvoker(delegate { bitrateLabel.Enabled = false; }));
+                bitrateUpDown.Invoke(new MethodInvoker(delegate { bitrateUpDown.Enabled = false; }));
+                lengthLabel.Invoke(new MethodInvoker(delegate { lengthLabel.Enabled = false; }));
+                lengthUpDown.Invoke(new MethodInvoker(delegate { lengthUpDown.Enabled = false; }));
+                folderSeperator.Invoke(new MethodInvoker(delegate { folderSeperator.Enabled = false; }));
+                folderLabel.Invoke(new MethodInvoker(delegate { folderLabel.Enabled = false; }));
+                browseButton.Invoke(new MethodInvoker(delegate { browseButton.Enabled = false; }));
+                organiseCheckBox.Invoke(new MethodInvoker(delegate { organiseCheckBox.Enabled = false; }));
+                clearCheckBox.Invoke(new MethodInvoker(delegate { clearCheckBox.Enabled = false; }));
+                clearUpDown.Invoke(new MethodInvoker(delegate { clearUpDown.Enabled = false; }));
+                clearLabel.Invoke(new MethodInvoker(delegate { clearLabel.Enabled = false; }));
             }
             else if (logger.CurrentStatus == Logger.Status.NOTLOGGING) // If not logging
             {
                 // Change text to not logging
-                statusLabel.Text = "Not Logging";
-                stopStartButton.Text = "Start Logging";
+                statusLabel.Invoke(new MethodInvoker(delegate { statusLabel.Text = "Not Logging"; }));
+                stopStartButton.Invoke(new MethodInvoker(delegate { stopStartButton.Text = "Start Logging"; }));
                 // Enable options
-                fileSeperator.Enabled = true;
-                bitrateLabel.Enabled = true;
-                bitrateUpDown.Enabled = true;
-                lengthLabel.Enabled = true;
-                lengthUpDown.Enabled = true;
-                folderSeperator.Enabled = true;
-                folderLabel.Enabled = true;
-                browseButton.Enabled = true;
-                organiseCheckBox.Enabled = true;
-                clearCheckBox.Enabled = true;
-                clearUpDown.Enabled = true;
-                clearLabel.Enabled = true;
+                fileSeperator.Invoke(new MethodInvoker(delegate { fileSeperator.Enabled = true; }));
+                bitrateLabel.Invoke(new MethodInvoker(delegate { bitrateLabel.Enabled = true; }));
+                bitrateUpDown.Invoke(new MethodInvoker(delegate { bitrateUpDown.Enabled = true; }));
+                lengthLabel.Invoke(new MethodInvoker(delegate { lengthLabel.Enabled = true; }));
+                lengthUpDown.Invoke(new MethodInvoker(delegate { lengthUpDown.Enabled = true; }));
+                folderSeperator.Invoke(new MethodInvoker(delegate { folderSeperator.Enabled = true; }));
+                folderLabel.Invoke(new MethodInvoker(delegate { folderLabel.Enabled = true; }));
+                browseButton.Invoke(new MethodInvoker(delegate { browseButton.Enabled = true; }));
+                organiseCheckBox.Invoke(new MethodInvoker(delegate { organiseCheckBox.Enabled = true; }));
+                clearCheckBox.Invoke(new MethodInvoker(delegate { clearCheckBox.Enabled = true; }));
+                clearUpDown.Invoke(new MethodInvoker(delegate { clearUpDown.Enabled = true; }));
+                clearLabel.Invoke(new MethodInvoker(delegate { clearLabel.Enabled = true; }));
             }
         }
     }
