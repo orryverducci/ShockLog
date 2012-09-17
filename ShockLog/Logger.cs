@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -294,7 +295,43 @@ namespace ShockLog
         /// <param name="age">Age in days that files should be deleted if older than value</param>
         private void ClearLogs(int age)
         {
+            // Create background worker to run tasks
+            BackgroundWorker worker = new BackgroundWorker();
+            // Tasks to run in the background worker
+            worker.DoWork += delegate(object s, DoWorkEventArgs args)
+            {
+                DirectoryInfo folder = new DirectoryInfo(Folder);
+                ClearLogs(age, folder);
+            };
+            // Run background worker
+            worker.RunWorkerAsync();
+        }
 
+        /// <summary>
+        /// Clears all recordings older than a certain age
+        /// </summary>
+        /// <param name="age">Age in days that files should be deleted if older than value</param>
+        /// <param name="folder">Folder in which files to be deleted are contained</param>
+        private void ClearLogs(int age, DirectoryInfo folder)
+        {
+            TimeSpan ageTimeSpan = new TimeSpan(age, 0, 0, 0);
+            // Scan all files in the current folder
+            foreach (FileInfo file in folder.GetFiles())
+            {
+                // If current file was created by ShockLog and is older than the specified age
+                if (file.Name.StartsWith("Log ") && file.Name.EndsWith(".mp3") && file.CreationTime < DateTime.Now.Subtract(ageTimeSpan))
+                {
+                    File.Delete(file.FullName);
+                }
+            }
+            // Get subdirectories in the current folder
+            DirectoryInfo[] subDirectories = folder.GetDirectories();
+            // Scan the folders in the current folders and call this method 
+            // again to go one level into the directory tree
+            foreach (DirectoryInfo subDirectory in subDirectories)
+            {
+                ClearLogs(age, subDirectory);
+            }
         }
         #endregion
         #endregion
