@@ -306,7 +306,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.CausesValidation = false;
-            this.ClientSize = new System.Drawing.Size(284, 300);
+            this.ClientSize = new System.Drawing.Size(284, 121);
             this.Controls.Add(this.expanderCheckBox);
             this.Controls.Add(this.clearLabel);
             this.Controls.Add(this.clearUpDown);
