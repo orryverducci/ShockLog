@@ -79,7 +79,7 @@ namespace ShockLog
         {
             // Registration code for Bass.Net
             // Provided value should be used only for ShockLog, not derived products
-            //BassNet.Registration("your mail", "your registration key");
+            BassNet.Registration("orry@orryverducci.co.uk", "2X24373423243720");
             // Set dll locations
             if (IntPtr.Size == 8) // If running in 64 bit
             {
