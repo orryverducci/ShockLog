@@ -332,6 +332,15 @@ namespace ShockLog
             {
                 ClearLogs(age, subDirectory);
             }
+            // If folder is empty after clearing old files, delete folder
+            try
+            {
+                folder.Delete();
+            }
+            catch (IOException)
+            {
+                // Folder isn't empty or in use if exception is thrown, do nothing
+            }
         }
         #endregion
         #endregion
