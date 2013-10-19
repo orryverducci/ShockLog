@@ -66,6 +66,13 @@ namespace ShockLog
             organiseCheckBox.Checked = Properties.Settings.Default.OrganiseFolder;
             clearCheckBox.Checked = Properties.Settings.Default.DeleteOld;
             clearUpDown.Value = Properties.Settings.Default.DeleteTime;
+            autoCheckBox.Checked = Properties.Settings.Default.AutoLog;
+            playingCheckBox.Checked = Properties.Settings.Default.LogPlaylist;
+            playingLabel.Text = Properties.Settings.Default.PlaylistFile;
+            if (autoCheckBox.Checked)
+            {
+                logger.Start();
+            }
         }
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
@@ -77,6 +84,9 @@ namespace ShockLog
             Properties.Settings.Default.OrganiseFolder = organiseCheckBox.Checked;
             Properties.Settings.Default.DeleteOld = clearCheckBox.Checked;
             Properties.Settings.Default.DeleteTime = (int)clearUpDown.Value;
+            Properties.Settings.Default.AutoLog = autoCheckBox.Checked;
+            Properties.Settings.Default.LogPlaylist = playingCheckBox.Checked;
+            Properties.Settings.Default.PlaylistFile = playingLabel.Text;
             Properties.Settings.Default.Save();
         }
         #endregion
@@ -131,11 +141,13 @@ namespace ShockLog
         {
             if (((CheckBox)sender).Checked) // If checked to show more options
             {
-                this.Height = 330;
+                this.Height = 438;
+                ((CheckBox)sender).Image = Properties.Resources.up;
             }
             else // Else if not checked
             {
-                this.Height = 150;
+                this.Height = 160;
+                ((CheckBox)sender).Image = Properties.Resources.down;
             }
         }
 
@@ -151,6 +163,22 @@ namespace ShockLog
             {
                 folderLabel.Text = folderDialog.SelectedPath; // Set location to selected path
             }
+        }
+
+        /// <summary>
+        /// Opens browse dialog and uses result to set playlist file
+        /// </summary>
+        /// <param name="sender">Sending object</param>
+        /// <param name="e">Event argument</param>
+        private void playingBrowseButton_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.Filter = "Text File (*.txt)|*.txt|All Files (*.*)|*.*";
+            if (fileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) // If OK is chosen on file browse dialog
+            {
+                playingLabel.Text = fileDialog.FileName;
+            }
+
         }
         #endregion
 
@@ -214,6 +242,26 @@ namespace ShockLog
         {
             logger.ClearAge = (int)((NumericUpDown)sender).Value;
         }
+
+        /// <summary>
+        /// Updates if the playing tracks should be logged depending on if selected checkbox is checked
+        /// </summary>
+        /// <param name="sender">Sending object</param>
+        /// <param name="e">Event arguments</param>
+        private void playingCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            logger.LogTracks = ((CheckBox)sender).Checked;
+        }
+
+        /// <summary>
+        /// Updates track logging file location with sender text
+        /// </summary>
+        /// <param name="sender">Sending object</param>
+        /// <param name="e">Event arguments</param>
+        private void playingLabel_TextChanged(object sender, EventArgs e)
+        {
+            logger.TracksFile = ((Label)sender).Text;
+        }
         #endregion
 
         /// <summary>
@@ -260,6 +308,11 @@ namespace ShockLog
                 clearCheckBox.Invoke(new MethodInvoker(delegate { clearCheckBox.Enabled = false; }));
                 clearUpDown.Invoke(new MethodInvoker(delegate { clearUpDown.Enabled = false; }));
                 clearLabel.Invoke(new MethodInvoker(delegate { clearLabel.Enabled = false; }));
+                logSeperator.Invoke(new MethodInvoker(delegate { logSeperator.Enabled = false; }));
+                autoCheckBox.Invoke(new MethodInvoker(delegate { autoCheckBox.Enabled = false; }));
+                playingCheckBox.Invoke(new MethodInvoker(delegate { playingCheckBox.Enabled = false; }));
+                playingLabel.Invoke(new MethodInvoker(delegate { playingLabel.Enabled = false; }));
+                playingBrowseButton.Invoke(new MethodInvoker(delegate { playingBrowseButton.Enabled = false; }));
             }
             else if (logger.CurrentStatus == Logger.Status.NOTLOGGING) // If not logging
             {
@@ -279,6 +332,11 @@ namespace ShockLog
                 clearCheckBox.Invoke(new MethodInvoker(delegate { clearCheckBox.Enabled = true; }));
                 clearUpDown.Invoke(new MethodInvoker(delegate { clearUpDown.Enabled = true; }));
                 clearLabel.Invoke(new MethodInvoker(delegate { clearLabel.Enabled = true; }));
+                logSeperator.Invoke(new MethodInvoker(delegate { logSeperator.Enabled = true; }));
+                autoCheckBox.Invoke(new MethodInvoker(delegate { autoCheckBox.Enabled = true; }));
+                playingCheckBox.Invoke(new MethodInvoker(delegate { playingCheckBox.Enabled = true; }));
+                playingLabel.Invoke(new MethodInvoker(delegate { playingLabel.Enabled = true; }));
+                playingBrowseButton.Invoke(new MethodInvoker(delegate { playingBrowseButton.Enabled = true; }));
             }
         }
     }

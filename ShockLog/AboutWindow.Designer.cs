@@ -75,9 +75,9 @@
             this.copyrightLabel.CausesValidation = false;
             this.copyrightLabel.Location = new System.Drawing.Point(12, 22);
             this.copyrightLabel.Name = "copyrightLabel";
-            this.copyrightLabel.Size = new System.Drawing.Size(155, 13);
+            this.copyrightLabel.Size = new System.Drawing.Size(182, 13);
             this.copyrightLabel.TabIndex = 1;
-            this.copyrightLabel.Text = "Copyright © Shock Radio 2012";
+            this.copyrightLabel.Text = "Copyright © Shock Radio 2012-2013";
             // 
             // versionLabel
             // 

@@ -42,6 +42,11 @@
             this.clearUpDown = new System.Windows.Forms.NumericUpDown();
             this.clearLabel = new System.Windows.Forms.Label();
             this.expanderCheckBox = new System.Windows.Forms.CheckBox();
+            this.autoCheckBox = new System.Windows.Forms.CheckBox();
+            this.playingCheckBox = new System.Windows.Forms.CheckBox();
+            this.playingLabel = new System.Windows.Forms.Label();
+            this.playingBrowseButton = new System.Windows.Forms.Button();
+            this.logSeperator = new ShockCast.Seperator();
             this.folderSeperator = new ShockCast.Seperator();
             this.fileSeperator = new ShockCast.Seperator();
             this.statusSeperator = new ShockCast.Seperator();
@@ -243,15 +248,69 @@
             // 
             this.expanderCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
             this.expanderCheckBox.CausesValidation = false;
-            this.expanderCheckBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.expanderCheckBox.Image = global::ShockLog.Properties.Resources.down;
             this.expanderCheckBox.Location = new System.Drawing.Point(15, 88);
             this.expanderCheckBox.Name = "expanderCheckBox";
             this.expanderCheckBox.Size = new System.Drawing.Size(25, 25);
             this.expanderCheckBox.TabIndex = 3;
-            this.expanderCheckBox.Text = "⏬";
             this.expanderCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.expanderCheckBox.UseVisualStyleBackColor = true;
             this.expanderCheckBox.CheckedChanged += new System.EventHandler(this.expanderCheckBox_CheckedChanged);
+            // 
+            // autoCheckBox
+            // 
+            this.autoCheckBox.AutoSize = true;
+            this.autoCheckBox.CausesValidation = false;
+            this.autoCheckBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.autoCheckBox.Location = new System.Drawing.Point(15, 313);
+            this.autoCheckBox.Name = "autoCheckBox";
+            this.autoCheckBox.Size = new System.Drawing.Size(154, 18);
+            this.autoCheckBox.TabIndex = 20;
+            this.autoCheckBox.Text = "Automatically start logging";
+            this.autoCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // playingCheckBox
+            // 
+            this.playingCheckBox.AutoSize = true;
+            this.playingCheckBox.CausesValidation = false;
+            this.playingCheckBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.playingCheckBox.Location = new System.Drawing.Point(15, 337);
+            this.playingCheckBox.Name = "playingCheckBox";
+            this.playingCheckBox.Size = new System.Drawing.Size(116, 18);
+            this.playingCheckBox.TabIndex = 21;
+            this.playingCheckBox.Text = "Log tracks played";
+            this.playingCheckBox.UseVisualStyleBackColor = true;
+            this.playingCheckBox.CheckedChanged += new System.EventHandler(this.playingCheckBox_CheckedChanged);
+            // 
+            // playingLabel
+            // 
+            this.playingLabel.AutoEllipsis = true;
+            this.playingLabel.CausesValidation = false;
+            this.playingLabel.Location = new System.Drawing.Point(12, 367);
+            this.playingLabel.Name = "playingLabel";
+            this.playingLabel.Size = new System.Drawing.Size(184, 21);
+            this.playingLabel.TabIndex = 22;
+            this.playingLabel.TextChanged += new System.EventHandler(this.playingLabel_TextChanged);
+            // 
+            // playingBrowseButton
+            // 
+            this.playingBrowseButton.CausesValidation = false;
+            this.playingBrowseButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.playingBrowseButton.Location = new System.Drawing.Point(202, 362);
+            this.playingBrowseButton.Name = "playingBrowseButton";
+            this.playingBrowseButton.Size = new System.Drawing.Size(70, 25);
+            this.playingBrowseButton.TabIndex = 23;
+            this.playingBrowseButton.Text = "Browse";
+            this.playingBrowseButton.UseVisualStyleBackColor = true;
+            this.playingBrowseButton.Click += new System.EventHandler(this.playingBrowseButton_Click);
+            // 
+            // logSeperator
+            // 
+            this.logSeperator.Label = "Logging Options";
+            this.logSeperator.Location = new System.Drawing.Point(12, 292);
+            this.logSeperator.Name = "logSeperator";
+            this.logSeperator.Size = new System.Drawing.Size(260, 15);
+            this.logSeperator.TabIndex = 19;
             // 
             // folderSeperator
             // 
@@ -307,6 +366,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(284, 121);
+            this.Controls.Add(this.playingLabel);
+            this.Controls.Add(this.playingBrowseButton);
+            this.Controls.Add(this.playingCheckBox);
+            this.Controls.Add(this.autoCheckBox);
+            this.Controls.Add(this.logSeperator);
             this.Controls.Add(this.expanderCheckBox);
             this.Controls.Add(this.clearLabel);
             this.Controls.Add(this.clearUpDown);
@@ -328,7 +392,6 @@
             this.Controls.Add(this.rightVolumeMeter);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "MainWindow";
             this.Text = "ShockLog";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
@@ -362,6 +425,11 @@
         private System.Windows.Forms.NumericUpDown clearUpDown;
         private System.Windows.Forms.Label clearLabel;
         private System.Windows.Forms.CheckBox expanderCheckBox;
+        private ShockCast.Seperator logSeperator;
+        private System.Windows.Forms.CheckBox autoCheckBox;
+        private System.Windows.Forms.CheckBox playingCheckBox;
+        private System.Windows.Forms.Label playingLabel;
+        private System.Windows.Forms.Button playingBrowseButton;
     }
 }
 

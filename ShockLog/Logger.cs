@@ -23,8 +23,12 @@ namespace ShockLog
         private IBaseEncoder encoder = null; // Audio encoder
         private Status currentStatus = Status.NOTLOGGING; // Current streaming status
         private Timer timer = new Timer(1000); // 1 second timer for file management
+        private Timer trackTimer = new Timer(30000); // 30 second timer for track logging
         private int currentHour; // Time of hour as last noted by time based functionality in 24 hour format
         private int hourRecordingStarted; // The hour the recording was started in 24 hour format
+        private string trackLog; // Track log
+        private string currentArtist;
+        private string currentTrack;
         #endregion
 
         #region Properties
@@ -34,6 +38,8 @@ namespace ShockLog
         public bool WeeklyFolders; // Save recordings in folders specific to each week
         public bool ClearOldLogs; // Clear logs older than a specified age
         public int ClearAge; // Number of days before logs should be cleared, if enabled
+        public bool LogTracks; // Log the tracks played from an XML file
+        public string TracksFile; // Location of the file to log tracks from
         public Status CurrentStatus // The current status of the logger
         {
             get
@@ -112,6 +118,7 @@ namespace ShockLog
             peakLevelMeter.Notification += new EventHandler(PeakLevelMeterNotification);
             // Add timer event handler
             timer.Elapsed += new ElapsedEventHandler(TimerElapsed);
+            trackTimer.Elapsed += new ElapsedEventHandler(TrackTimerElapsed);
         }
 
         /// <summary>
@@ -232,6 +239,18 @@ namespace ShockLog
             currentHour = DateTime.Now.Hour;
             hourRecordingStarted = currentHour;
             timer.Start();
+            // Start logging tracks
+            if (LogTracks)
+            {
+                trackLog = location + "\\Log " + DateTime.Now.ToString("dd-MM-yy HH.mm") + ".txt";
+                if (System.IO.File.Exists(TracksFile))
+                {
+                    string[] trackFile = System.IO.File.ReadAllLines(TracksFile);
+                    currentArtist = trackFile[1];
+                    currentTrack = trackFile[2];
+                }
+                trackTimer.Start();
+            }
         }
 
         /// <summary>
@@ -241,6 +260,11 @@ namespace ShockLog
         {
             // Stop timer
             timer.Stop();
+            // Stop track logging
+            if (LogTracks)
+            {
+                trackTimer.Stop();
+            }
             // Stop encoder
             encoder.Stop();
             encoder = null;
@@ -319,7 +343,7 @@ namespace ShockLog
             foreach (FileInfo file in folder.GetFiles())
             {
                 // If current file was created by ShockLog and is older than the specified age
-                if (file.Name.StartsWith("Log ") && file.Name.EndsWith(".mp3") && file.CreationTime < DateTime.Now.Subtract(ageTimeSpan))
+                if (file.Name.StartsWith("Log ") && (file.Name.EndsWith(".mp3") || file.Name.EndsWith(".txt")) && file.CreationTime < DateTime.Now.Subtract(ageTimeSpan))
                 {
                     File.Delete(file.FullName);
                 }
@@ -340,6 +364,28 @@ namespace ShockLog
             catch (IOException)
             {
                 // Folder isn't empty or in use if exception is thrown, do nothing
+            }
+        }
+
+        /// <summary>
+        /// Updates track log if enabled
+        /// </summary>
+        /// <param name="sender">Sending object</param>
+        /// <param name="e">Event arguments</param>
+        private void TrackTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            if (System.IO.File.Exists(TracksFile))
+            {
+                string[] trackFile = System.IO.File.ReadAllLines(TracksFile, Encoding.GetEncoding("Windows-1252"));
+                if (trackFile.Length == 3 && (trackFile[0] == "Song" || trackFile[0] == "Cart") && (trackFile[1] != currentArtist || trackFile[2] != currentTrack))
+                {
+                    currentArtist = trackFile[1];
+                    currentTrack = trackFile[2];
+                    using (StreamWriter sw = File.AppendText(trackLog))
+                    {
+                        sw.WriteLine(currentArtist + " - " + currentTrack);
+                    }
+                }
             }
         }
         #endregion
